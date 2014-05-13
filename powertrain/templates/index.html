@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block title %}Powertrain{% endblock %}
+
+{% block page_content %}
+<div class="page-header">
+  <h1>Powertrain is a new image processing engine</h1>
+</div>
+<div>
+  <h2>Hello <strong>{% if current_user.is_authenticated() %}{{current_user.email}}{% else %}stranger{% endif %}</strong></h2>
+</div>
+
+
+{% endblock %}

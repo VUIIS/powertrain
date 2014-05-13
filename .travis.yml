@@ -1,0 +1,21 @@
+language: python
+python:
+  - "2.7"
+before_script:
+  - psql -c 'create database powertrain_testing;' -E utf-8 -U postgres
+install:
+  - pip install -r reqs/dev.txt
+  - export SECRET_KEY=somethingno1willevarguess
+  - export FLASK_CONFIG=testing
+  - export MAIL_USERNAME=foo@example.com
+  - export MAIL_PASSWORD=foobarbat
+  - export MAIL_SERVER=smtp.example.com
+  - export MAIL_PORT=587
+  - export TEST_DATABASE_URL=postgres://postgres:@localhost/powertrain_testing
+  - export ADMIN=powertrain@vanderbilt.edu
+  - export FLASK_COVERAGE=1
+script:
+  - make test
+  - make docs
+addons:
+  postgresql: "9.3"
