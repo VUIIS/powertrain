@@ -20,7 +20,7 @@ def before_request():
 @auth.route('/unconfirmed')
 def unconfirmed():
     if current_user.is_anonymous() or current_user.confirmed:
-        return redirect('main.index')
+        return redirect(url_for('main.index'))
     return render_template('auth/unconfirmed.html')
 
 
@@ -124,11 +124,13 @@ def password_reset(token):
     if form.validate_on_submit():
         user = User.query.filter_by(email=form.email.data).first()
         if user is None:
+            flash("Sorry, you don't appear to be registered. Please register again.")
             return redirect(url_for('main.index'))
         if user.reset_password(token, form.password.data):
             flash('Your password has been updated.')
             return redirect(url_for('auth.login'))
         else:
+            flash("There was an issue updating your password.")
             return redirect(url_for('main.index'))
     return render_template('auth/reset_password.html', form=form)
 
