@@ -15,14 +15,14 @@ basedir = os.path.abspath(os.path.dirname(__file__))
 class Config(object):
     SECRET_KEY = os.environ.get('SECRET_KEY') or 'hard to guess string'
     SQLALCHEMY_COMMIT_ON_TEARDOWN = True
-    MAIL_SERVER = os.environ.get('MAIL_SERVER')
-    MAIL_PORT = int(os.environ.get("MAIL_PORT"))
+    MAIL_SERVER = os.environ.get('MAIL_SERVER', 'smtp.example.com')
+    MAIL_PORT = int(os.environ.get("MAIL_PORT", 587))
     MAIL_USE_TLS = True
-    MAIL_USERNAME = os.environ.get('MAIL_USERNAME')
-    MAIL_PASSWORD = os.environ.get('MAIL_PASSWORD')
+    MAIL_USERNAME = os.environ.get('MAIL_USERNAME', 'foo')
+    MAIL_PASSWORD = os.environ.get('MAIL_PASSWORD', 'pass')
     MAIL_SUBJECT_PREFIX = '[Powertrain]'
     MAIL_SENDER = 'Powertrain Admin'
-    ADMIN = os.environ.get('ADMIN')
+    ADMIN = os.environ.get('ADMIN', 'admin@example.com')
 
     @staticmethod
     def init_app(app):
