@@ -1,12 +1,12 @@
 # Powertrain
 
-Powertrain is a system designed to manage and execute large-scale neuroimaging projects.
+Powertrain is a system designed to manage and execute large-scale neuroimaging projects across [VUIIS][vuiis].
 
-Documentation can be found [here](http://powertrain.rtfd.org)
+It is currently in the planning stages. Documentation can be found [here][rtfd]
 
 ## Who
 
-Powertrain is supported by [VUIIS](http://vuiis.vanderbilt.edu). The following people are involved:
+Powertrain is supported by [VUIIS][vuiis]. The following people are involved:
 
 * Scott Burns
 * Brian Boyd
@@ -24,11 +24,15 @@ Where possible, we try to follow [12 Factor Application](http://12factor.net) pr
 * Config in the environment
 * Development/production parity
 
-Powertrain is built upon [Flask](http://flask.pocoo.org), a minimal web framework for python.
+Powertrain will most likely be built upon:
+
+* [Flask](http://flask.pocoo.org), a minimal web framework for python.
+* [SQLAlchemy](http://www.sqlalchemy.org), the database toolkit for python.
+* [Postgres](http://postgresql.org), the worlds most advanced open source database.
 
 ### Setting up the virtual environment
 
-You should use a [virtualenv](https://virtualenv.pypa.io/en/latest/) & [virtualenvwrapper](http://virtualenvwrapper.readthedocs.org/en/latest/) to setup your environment like so:
+You should use a [virtualenv](https://virtualenv.pypa.io/en/latest/) & [virtualenvwrapper](http://virtualenvwrapper.readthedocs.org/en/latest/) to setup your environment. After setting up these tools, make a virtual environment like so:
 
 ```bash
 $ mkvirtualenv powertrain
@@ -49,6 +53,7 @@ Powertrain honors the following envvars:
 * `DEV_DATABASE_URL`: database url for development purposes
 * `TEST_DATABASE_URL`: database url for testing purposes
 * `ADMIN`: email account that has administrator rights
+* `FLASK_COVERAGE`: `./manage.py test` will display coverage report after finishing unittests.
 
 ### Postgres
 
@@ -85,3 +90,6 @@ $ export FLASK_COVERAGE=1; make test
 ```
 
 Run it early, run it often.
+
+[vuiis]: http://vuiis.vanderbilt.edu
+[rtfd]: http://powertrain.rtfd.org

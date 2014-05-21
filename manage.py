@@ -44,8 +44,12 @@ manager.add_command('db', MigrateCommand)
 
 
 @manager.command
-def test():
+def test(coverage=False):
     """Run the unit tests."""
+    if coverage and not os.environ.get('FLASK_COVERAGE'):
+        import sys
+        os.environ['FLASK_COVERAGE'] = '1'
+        os.execvp(sys.executable, [sys.executable] + sys.argv)
     import unittest
     tests = unittest.TestLoader().discover('tests')
     unittest.TextTestRunner(verbosity=1).run(tests)
@@ -55,7 +59,7 @@ def test():
         print("Coverage summary:")
         COV.report()
         basedir = os.path.abspath(os.path.dirname(__file__))
-        covdir = os.path.join(basedir, 'tmp/coverage')
+        covdir = os.path.join(basedir, 'htmlcov')
         COV.html_report(directory=covdir)
         print("HTML version: file://{}/index.html".format(covdir))
         COV.erase()

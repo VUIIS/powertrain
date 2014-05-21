@@ -4,7 +4,7 @@ test: clean
 	./manage.py test
 
 clean:
-	rm -rf tmp
+	rm -rf htmlcov
 	find . -type f -name "*.pyc" -delete
 
 docs:
