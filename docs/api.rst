@@ -8,6 +8,7 @@ Models
 
 .. autoclass:: powertrain.models.Project
 .. autoclass:: powertrain.models.User
+    :members:
 
 **Within Projects**
 

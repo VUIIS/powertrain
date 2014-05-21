@@ -33,16 +33,32 @@ class User(UserMixin, db.Model):
 
     @password.setter
     def password(self, password):
+        """``User.password`` setter. Generates & stores hashed version
+
+        :param str password: Password for user
+        """
         self.password_hash = generate_password_hash(password)
 
     def verify_password(self, password):
+        """Returns True when incoming password matches hashed version"""
         return check_password_hash(self.password_hash, password)
 
     def generate_confirmation_token(self, expiration=86400):
+        """Generate a token used to confirm email addresses
+
+        :param int expiration: Time (seconds) after which token doesn't
+          work
+        """
         s = Serializer(current_app.config['SECRET_KEY'], expiration)
         return s.dumps({'confirm': self.id})
 
     def confirm(self, token):
+        """Confirm ``User.email`` is valid and the actual human has
+        access to this account.
+
+        :param str token: Confirmation token. Generated with
+          ``generate_confirmation_token``
+        """
         s = Serializer(current_app.config['SECRET_KEY'])
         try:
             data = s.loads(token)
@@ -55,10 +71,20 @@ class User(UserMixin, db.Model):
         return True
 
     def generate_reset_token(self, expiration=86400):
+        """Generate a token for resetting a password
+
+        :param int expiration: Time (seconds) after which token doesn't
+          work"""
         s = Serializer(current_app.config['SECRET_KEY'], expiration)
         return s.dumps({'reset': self.id})
 
     def reset_password(self, token, new_password):
+        """Reset a password when given a proper token.
+
+        Handling matching passwords is done elsewhere.
+
+        :param str token: Generated with ``User.generate_reset_token``
+        :param str new_password: New password"""
         s = Serializer(current_app.config['SECRET_KEY'])
         try:
             data = s.loads(token)
@@ -71,7 +97,7 @@ class User(UserMixin, db.Model):
         return True
 
     def __repr__(self):
-        return '<User(address={0.address})>'.format(self)
+        return '<User(email={0.email})>'.format(self)
 
 
 class AnonymousUser(AnonymousUserMixin):
